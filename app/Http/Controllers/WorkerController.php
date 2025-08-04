@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Worker\StoreRequest;
+use App\Http\Requests\Worker\UpdateRequest;
 use App\Models\Worker;
 use Illuminate\Http\Request;
 
@@ -9,7 +11,9 @@ class WorkerController extends Controller
 {
     public function index()
     {
-        $workers = Worker::all();
+        // $workers = Worker::all();
+
+        $workers = Worker::paginate(2);
 
         return view('worker.index', compact('workers'));
 
@@ -37,39 +41,60 @@ class WorkerController extends Controller
 
     public function create()
     {
-        $workers = [
-            'name' => 'mark',
-            'surname' => 'markov',
-            'email' => 'markov@mail.ru',
-            'age' => 31,
-            'description' => 'I am mark',
-            'is_married' => true,
-        ];
+        // $workers = [
+        //     'name' => 'mark',
+        //     'surname' => 'markov',
+        //     'email' => 'markov@mail.ru',
+        //     'age' => 31,
+        //     'description' => 'I am mark',
+        //     'is_married' => true,
+        // ];
 
-        Worker::create($workers);
+        // Worker::create($workers);
 
-        return 'mark created';
+        return view('worker.create');
     }
 
-    public function delete()
+    public function store(StoreRequest $request)
     {
-        $worker = Worker::find(2);
+        $data = $request->validated();
+        $data['is_married'] = isset( $data['is_married']) ?  true : false;
 
-        $worker->delete();
-        return 'work delete';
+        Worker::create($data);
+
+        return redirect()->route('worker.index');
     }
 
-    public function update()
+    public function edit(Worker $worker)
     {
-        $worker = Worker::find(2);
+        return view('worker.edit', compact('worker'));
+    }
 
-        $worker->name = 'New name';
-        $worker->save();
+    public function update(UpdateRequest $request, Worker $worker)
+    {
+        // $worker = Worker::find(2);
+
+        // $worker->name = 'New name';
+        // $worker->save();
 
         // $worker->update([
         //     'name' => 'Maaaark',
         // ]);
 
-        return 'mark update';
+        $data = $request->validated();
+        $data['is_married'] = isset( $data['is_married']) ?  true : false;
+
+        $worker->update($data);
+
+        return redirect()->route('worker.show', $worker->id);
     }
+
+    public function delete(Worker $worker)
+    {
+        // $worker = Worker::find(2);
+
+        $worker->delete();
+        return redirect()->route('worker.index');
+    }
+
 }

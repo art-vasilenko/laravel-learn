@@ -1,0 +1,11 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 350px;
+}
+
+.myNav svg {
+    width: 20px;
+    height: 20px;
+}
