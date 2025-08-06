@@ -25,7 +25,7 @@ Route::get('/workers/{worker}', [WorkerController::class, 'show'])->name('worker
 Route::post('/workers', [WorkerController::class, 'store'])->name('worker.store');
 
 //Редактирвоание
-Route::get('/workers{worker}/edit', [WorkerController::class, 'edit'])->name('worker.edit');
+Route::get('/workers/{worker}/edit', [WorkerController::class, 'edit'])->name('worker.edit');
 Route::patch('/workers/{worker}', [WorkerController::class, 'update'])->name('worker.update');
 
 //Удаление

@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Worker extends Model
+class Profile extends Model
 {
     use HasFactory;
 
-    protected $table = 'workers';
+    protected $table = 'profiles';
     protected $guarded = false;
 
-    public function profile()
+    public function worker()
     {
-        return $this->hasOne(Profile::class, 'worker_id', 'id');
+        return $this->belongsTo(Worker::class, 'worker_id', 'id');
     }
 }
