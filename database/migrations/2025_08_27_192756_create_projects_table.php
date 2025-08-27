@@ -13,17 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('workers', function (Blueprint $table) {
+        Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string(column: 'surname');
-            $table->string('email');
-            $table->integer('age')->nullable();
-            $table->text('description')->nullable();
-            $table->boolean('is_married')->default(false);
+            $table->string('title');
             $table->timestamps();
-
-            $table->foreignId('position_id')->index()->constrained('positions');
         });
     }
 
@@ -34,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('workers');
+        Schema::dropIfExists('projects');
     }
 };

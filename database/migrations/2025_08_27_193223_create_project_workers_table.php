@@ -13,16 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('profiles', function (Blueprint $table) {
+        Schema::create('project_workers', function (Blueprint $table) {
             $table->id();
-            // Один к одному
+            $table->foreignId('project_id')->index()->constrained('projects');
             $table->foreignId('worker_id')->index()->constrained('workers');
 
-            $table->string('city')->nullable();
-            $table->string('skill')->nullable();;
-            $table->integer('experience')->nullable();;
-            $table->date('finished_study_at')->nullable();;
-
+            $table->unique(['project_id', 'worker_id']);
             $table->timestamps();
         });
     }
@@ -34,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('profiles');
+        Schema::dropIfExists('project_workers');
     }
 };
