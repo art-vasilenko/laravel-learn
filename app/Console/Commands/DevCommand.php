@@ -2,9 +2,13 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Avatar;
+use App\Models\Client;
 use App\Models\Departament;
 use App\Models\Position;
 use App\Models\Project;
+use App\Models\Review;
+use App\Models\Tag;
 use App\Models\Worker;
 use Illuminate\Console\Command;
 
@@ -85,6 +89,59 @@ class DevCommand extends Command
         // $worker = Worker::find(2);
         // dd($worker->profile->toArray());
         // dd($worker->projects->toArray());
+
+        // ПОЛИМОРФНЫЕ ОТНОШЕНИЯ ОДИН К ОДНОМУ
+
+        // $worker = Worker::find(5);
+        // $client = Client::find(2);
+
+        // $avatar = Avatar::find(1);
+
+        // dd($avatar->avatarable->toArray());
+
+        // $worker->avatar()->create([
+        //     'path' => 'some path_5',
+        // ]);
+
+        // $client->avatar()->create([
+        //     'path' => 'some path_2',
+        // ]);
+
+        // ПОЛИМОРФНЫЕ ОТНОШЕНИЯ ОДИН КО МНОГИМ
+
+        // $worker = Worker::find(5);
+        // $client = Client::find(2);
+        // $review = Review::find(3);
+
+        // $worker->reviews()->create([
+        //     'body' => 'text body worker 1',
+        // ]);
+
+        // $worker->reviews()->create([
+        //     'body' => 'text body worker 2',
+        // ]);
+
+        // $client->reviews()->create([
+        //     'body' => 'text body client 1',
+        // ]);
+
+        // $client->reviews()->create([
+        //     'body' => 'text body client 2',
+        // ]);
+
+        // dd($client->reviews->toArray());
+        // dd($review->reviewable->toArray());
+
+        // ПОЛИМОРФНЫЕ ОТНОШЕНИЯ МНОГИЕ КО МНОГИМ
+
+        $worker = Worker::find(2);
+        $client = Client::find(1);
+        $tag = Tag::find(2);
+
+        // $worker->tags()->attach([1, 2]);
+        // $client->tags()->attach([2, 1]);
+
+        dd($tag->clients->toArray());
 
         return 0;
     }
@@ -234,6 +291,22 @@ class DevCommand extends Command
         $worker4->profile()->create($profileData4);
         $worker5->profile()->create($profileData5);
         $worker6->profile()->create($profileData6);
+
+        Client::create([
+            'name' => 'Bob_client'
+        ]);
+
+        Client::create([
+            'name' => 'Ropz_client'
+        ]);
+
+        Tag::create([
+            'title' => 'sport'
+        ]);
+
+        Tag::create([
+            'title' => 'travel'
+        ]);
 
         return 0;
     }

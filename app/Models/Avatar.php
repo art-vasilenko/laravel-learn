@@ -5,16 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Profile extends Model
+class Avatar extends Model
 {
     use HasFactory;
-
-    protected $table = 'profiles';
     protected $guarded = false;
 
-    // ОДИН К ОДНОМУ
-    public function worker()
+    // ПОЛИМОРФМНЫЕ ОТНОШЕНИЯ ОДИН К ОДНОМУ
+
+    public function avatarable()
     {
-        return $this->belongsTo(Worker::class);
+        return $this->morphTo();
     }
 }

@@ -5,16 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Profile extends Model
+class Review extends Model
 {
     use HasFactory;
-
-    protected $table = 'profiles';
     protected $guarded = false;
 
-    // ОДИН К ОДНОМУ
-    public function worker()
+    // ПОЛИМОРФНЫЕ ОТНОШЕНИЯ ОДИН КО МНОГИМ
+    public function reviewable()
     {
-        return $this->belongsTo(Worker::class);
+        return $this->morphTo();
     }
 }

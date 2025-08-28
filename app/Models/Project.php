@@ -13,6 +13,7 @@ class Project extends Model
 
     protected $guarded = false;
 
+    // МНОГИЕ КО МНОГИМ
     public function workers()
     {
         return $this->belongsToMany(

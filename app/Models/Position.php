@@ -13,11 +13,13 @@ class Position extends Model
 
     protected $guarded = false;
 
+    // ОДИН КО МНОГИМ
     public function workers()
     {
         return $this->hasMany(Worker::class);
     }
 
+    // ОДИН К ОДНОМУ ЧЕРЕЗ
     public function departament()
     {
         return $this->belongsTo(Departament::class);
