@@ -4,9 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Departament;
 use App\Models\Position;
-use App\Models\Profile;
 use App\Models\Project;
-use App\Models\ProjectWorker;
 use App\Models\Worker;
 use Illuminate\Console\Command;
 
@@ -81,6 +79,12 @@ class DevCommand extends Command
 
         // $departament = Departament::find(1);
         // dd($departament->workers->toArray());
+
+        // КОНВЕНЦИЯ LARAVEL
+
+        // $worker = Worker::find(2);
+        // dd($worker->profile->toArray());
+        // dd($worker->projects->toArray());
 
         return 0;
     }
@@ -183,7 +187,6 @@ class DevCommand extends Command
         $worker6 = Worker::create($workerData6);
 
         $profileData1 = [
-            'worker_id' => $worker1->id,
             'city' => 'Tula',
             'skill' => 'Coder',
             'experience' => 5,
@@ -191,7 +194,6 @@ class DevCommand extends Command
         ];
 
         $profileData2 = [
-            'worker_id' => $worker2->id,
             'city' => 'Moskow',
             'skill' => 'Frontend',
             'experience' => 2,
@@ -199,7 +201,6 @@ class DevCommand extends Command
         ];
 
         $profileData3 = [
-            'worker_id' => $worker3->id,
             'city' => 'Moskow',
             'skill' => 'Design',
             'experience' => 12,
@@ -207,7 +208,6 @@ class DevCommand extends Command
         ];
 
         $profileData4 = [
-            'worker_id' => $worker4->id,
             'city' => 'Praga',
             'skill' => 'Junior',
             'experience' => 1,
@@ -215,7 +215,6 @@ class DevCommand extends Command
         ];
 
         $profileData5 = [
-            'worker_id' => $worker5->id,
             'city' => 'Amsterdam',
             'skill' => 'Middle',
             'experience' => 3,
@@ -223,19 +222,18 @@ class DevCommand extends Command
         ];
 
         $profileData6 = [
-            'worker_id' => $worker6->id,
             'city' => 'Roma',
             'skill' => 'Senior',
             'experience' => 6,
             'finished_study_at' => '2012-06-01',
         ];
 
-        Profile::create($profileData1);
-        Profile::create($profileData2);
-        Profile::create($profileData3);
-        Profile::create($profileData4);
-        Profile::create($profileData5);
-        Profile::create($profileData6);
+        $worker1->profile()->create($profileData1);
+        $worker2->profile()->create($profileData2);
+        $worker3->profile()->create($profileData3);
+        $worker4->profile()->create($profileData4);
+        $worker5->profile()->create($profileData5);
+        $worker6->profile()->create($profileData6);
 
         return 0;
     }
@@ -260,44 +258,20 @@ class DevCommand extends Command
             'title' => 'Blog'
         ]);
 
-        ProjectWorker::create([
-            'project_id' => $project1->id,
-            'worker_id' => $workerManager->id,
+        // Конвенция laravel МНОГИЕ КО МНОГИМ
+
+        $project1->workers()->attach([
+            $workerManager->id,
+            $workerBackend->id,
+            $workerFrontend->id,
+            $workerDesigner->id
         ]);
 
-        ProjectWorker::create([
-            'project_id' => $project1->id,
-            'worker_id' => $workerBackend->id,
-        ]);
-
-        ProjectWorker::create([
-            'project_id' => $project1->id,
-            'worker_id' => $workerFrontend->id,
-        ]);
-
-        ProjectWorker::create([
-            'project_id' => $project1->id,
-            'worker_id' => $workerDesigner->id,
-        ]);
-
-        ProjectWorker::create([
-            'project_id' => $project2->id,
-            'worker_id' => $workerManager->id,
-        ]);
-
-        ProjectWorker::create([
-            'project_id' => $project2->id,
-            'worker_id' => $workerDesigner->id,
-        ]);
-
-        ProjectWorker::create([
-            'project_id' => $project2->id,
-            'worker_id' => $workerFullstack1->id,
-        ]);
-
-        ProjectWorker::create([
-            'project_id' => $project2->id,
-            'worker_id' => $workerFullstack2->id,
+        $project2->workers()->attach([
+            $workerManager->id,
+            $workerDesigner->id,
+            $workerFullstack1->id,
+            $workerFullstack2->id,
         ]);
     }
 }

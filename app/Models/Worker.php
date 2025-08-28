@@ -15,23 +15,20 @@ class Worker extends Model
     // ОДИН К ОДНОМУ
     public function profile()
     {
-        return $this->hasOne(Profile::class, 'worker_id', 'id');
+        return $this->hasOne(Profile::class);
     }
 
     // ОДИН КО МНОГИМ
     public function position()
     {
-        return $this->belongsTo(Position::class, 'position_id', 'id');
+        return $this->belongsTo(Position::class);
     }
 
     // МНОГИЕ КО МНОГИМ
     public function projects()
     {
         return $this->belongsToMany(
-        Project::class,
-        'project_workers',
-        'worker_id',
-        'project_id',
+        Project::class
         );
     }
 }

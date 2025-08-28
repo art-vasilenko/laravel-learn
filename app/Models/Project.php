@@ -16,10 +16,7 @@ class Project extends Model
     public function workers()
     {
         return $this->belongsToMany(
-        Worker::class,
-        'project_workers',
-        'project_id',
-        'worker_id',
+        Worker::class
         );
     }
 }

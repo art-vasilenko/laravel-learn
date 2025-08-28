@@ -18,11 +18,7 @@ class Departament extends Model
     {
         return $this->hasOneThrough(
             Worker::class,
-            Position::class,
-            'departament_id',
-            'position_id',
-            'id',
-            'id',
+            Position::class
         )->where('position_id', 2);
     }
 
@@ -31,11 +27,7 @@ class Departament extends Model
     {
         return $this->hasManyThrough(
             Worker::class,
-            Position::class,
-            'departament_id',
-            'position_id',
-            'id',
-            'id',
+            Position::class
         );
     }
 }
