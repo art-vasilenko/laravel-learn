@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Departament;
 use App\Models\Position;
 use App\Models\Profile;
 use App\Models\Project;
@@ -47,17 +48,18 @@ class DevCommand extends Command
         // Через взаимодейсвия классов моделей один ко многим
 
         // $worker = Worker::find(1);
-        // $position = Position::find(1);
-
-        // dd($position->workers->toArray());
         // dd($worker->position->toArray());
+
+        // $position = Position::find(2);
+        // dd($position->workers->toArray());
+
 
         // Через взаимодейсвия классов моделей многие ко многим
 
         // $project = Project::find(1);
         // dd($project->workers->toArray());
-        $worker = Worker::find(2);
-        dd($worker->projects->toArray());
+        // $worker = Worker::find(2);
+        // dd($worker->projects->toArray());
 
 
         // $projectWorkers = ProjectWorker::where('project_id', $project->id)->get();
@@ -67,22 +69,46 @@ class DevCommand extends Command
         // $workers = Worker::whereIn('id', $workersIds)->get();
         // dd($workers->toArray());
 
+        // ОДИН К ОДНОМУ ЧЕРЕЗ
+
+        // $departament = Departament::find(1);
+        // dd($departament->boss->toArray());
+
+        // $worker = Worker::find(2);
+        // dd($worker->position->departament->toArray());
+
+        // ОДИН КО МНОГИМ ЧЕРЕЗ
+
+        // $departament = Departament::find(1);
+        // dd($departament->workers->toArray());
+
         return 0;
     }
 
     private function prepareData()
     {
 
+        $departament1 = Departament::create([
+            'title' => 'IT',
+        ]);
+
+        $departament2 = Departament::create([
+            'title' => 'Analytics',
+        ]);
+
         $positionData1 = [
             'title' => 'Developer',
+            'departament_id' => $departament1->id
         ];
 
         $positionData2 = [
             'title' => 'Manager',
+            'departament_id' => $departament1->id
         ];
 
         $positionData3 = [
             'title' => 'Designer',
+            'departament_id' => $departament1->id
         ];
 
         $position1 = Position::create($positionData1);
