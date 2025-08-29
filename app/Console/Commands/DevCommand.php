@@ -134,14 +134,19 @@ class DevCommand extends Command
 
         // ПОЛИМОРФНЫЕ ОТНОШЕНИЯ МНОГИЕ КО МНОГИМ
 
-        $worker = Worker::find(2);
-        $client = Client::find(1);
-        $tag = Tag::find(2);
+        // $worker = Worker::find(2);
+        // $client = Client::find(1);
+        // $tag = Tag::find(2);
 
         // $worker->tags()->attach([1, 2]);
         // $client->tags()->attach([2, 1]);
 
-        dd($tag->clients->toArray());
+        // dd($tag->clients->toArray());
+
+        // ОТНОШЕНИЯ С ВЫБОРКОЙ
+
+        // $position = Position::find(1);
+        // dd($position->queryWorker->toArray());
 
         return 0;
     }

@@ -24,4 +24,11 @@ class Position extends Model
     {
         return $this->belongsTo(Departament::class);
     }
+
+    // ОТНОШЕНИЯ С ВЫБОРКОЙ
+    public function queryWorker()
+    {
+        // return $this->hasOne(Worker::class)->ofMany('age', 'max');
+        return $this->hasOne(Worker::class)->where('surname', '=', 'Vadikov');
+    }
 }
